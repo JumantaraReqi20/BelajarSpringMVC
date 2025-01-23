@@ -1,5 +1,6 @@
 package belajarspringwebmvc.belajarspringwebmvc.controller;
 
+import jakarta.servlet.http.Cookie;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ class AuthControllerTest {
                         .param("password", "admin")
         ).andExpectAll(
                 status().isOk(),
-                content().string(Matchers.containsString("Login Success"))
+                content().string(Matchers.containsString("Login Success")),
+                cookie().value("username", Matchers.equalTo("Reqi"))
         );
     }
 
@@ -44,6 +46,18 @@ class AuthControllerTest {
         ).andExpectAll(
                 status().isUnauthorized(),
                 content().string(Matchers.containsString("Login Failed"))
+        );
+    }
+
+    @Test
+    void getUserTest() throws Exception {
+        mockMvc.perform(
+                get("/auth/login")
+                        .cookie(new Cookie("username", "Reqi"))
+                //karena cookie itu biasanya dikirim oleh browser, jadi kita perlu membuat simulasi seolah-olah cookie nya ada
+        ).andExpectAll(
+                status().isOk(),
+                content().string(Matchers.containsString("Hello Reqi"))
         );
     }
 }
