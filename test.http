@@ -1,0 +1,22 @@
+POST http://localhost:8181/api/person
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Reqi",
+  "middleName": "Jumantara",
+  "lastName": "Hapid",
+  "email": "reqi.example@gmail.com",
+  "password": "password",
+  "hobbies": [
+    "makan", "main game", "coding"
+  ],
+  "socialMedias": [{
+    "name": "facebook",
+    "location": "facebook.com/reqiii"
+  }, {
+    "name": "instagram",
+    "location": "instagram.com/reqiii"
+  }]
+}
+
