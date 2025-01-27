@@ -3,7 +3,6 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "firstName": "Reqi",
   "middleName": "Jumantara",
   "lastName": "Hapid",
   "email": "reqi.example@gmail.com",
