@@ -41,4 +41,21 @@ class PersonControllerTest {
                 ))
         );
     }
+
+    @Test
+    void errorCreatePerson() throws Exception {
+        mockMvc.perform(
+                post("/person")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("firstName", "Reqi")
+                        .param("middleName", "Jumantara")
+                        .param("lastName", "Hapid")
+                        .param("email", "reqi.jumantara@gmail.com")
+                        //.param("password", "12345")
+        ).andExpectAll(
+                status().isBadRequest(),
+                content().string(Matchers.containsString("You send invalid data")
+                )
+        );
+    }
 }
