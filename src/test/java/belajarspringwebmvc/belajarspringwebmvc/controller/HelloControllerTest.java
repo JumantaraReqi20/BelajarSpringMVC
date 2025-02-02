@@ -55,4 +55,27 @@ class HelloControllerTest {
                 status().isMethodNotAllowed()
         );
     }
+
+    @Test
+    void helloView() throws Exception {
+
+        mockMvc.perform(
+                get("/web/hello")
+                        .queryParam("name", "Reqi")
+        ).andExpectAll(
+                status().isOk(),
+                content().string(Matchers.containsString("Hallo Reqi")),
+                content().string(Matchers.containsString("Belajar View"))
+        );
+    }
+
+    @Test
+    void helloViewRedirect() throws Exception {
+
+        mockMvc.perform(
+                get("/web/hello")
+        ).andExpectAll(
+            status().is3xxRedirection()
+        );
+    }
 }

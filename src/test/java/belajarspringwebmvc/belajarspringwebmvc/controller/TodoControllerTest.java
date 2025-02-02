@@ -1,12 +1,14 @@
 package belajarspringwebmvc.belajarspringwebmvc.controller;
 
-import belajarspringwebmvc.belajarspringwebmvc.model.User;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import javax.print.attribute.standard.Media;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,29 +19,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserControllerTest {
+class TodoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void getUser() throws Exception {
+    void addTodo() throws Exception {
         mockMvc.perform(
-                get("/user/current")
-                        .sessionAttr("user", new User("Reqi"))
+                post("/todos")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .queryParam("todo", "memasak")
         ).andExpectAll(
                 status().isOk(),
-                content().string(Matchers.containsString("Hello Reqi"))
+                content().string(Matchers.containsString("memasak"))
         );
     }
 
     @Test
-    void getUserInvalid() throws Exception {
+    void getTodo() throws Exception {
         mockMvc.perform(
-                get("/user/current")
-
+                get("/todos")
+                        .accept(MediaType.APPLICATION_JSON)
         ).andExpectAll(
-                status().is3xxRedirection()
+                status().isOk(),
+                content().string(Matchers.containsString("memasak"))
         );
     }
 }
